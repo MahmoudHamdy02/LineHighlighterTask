@@ -1,0 +1,8 @@
+<p>Upload PDF file</p>
+
+<p *ngIf="converting">Loading...</p>
+
+<form action="#">
+    <button onclick="document.getElementById('upload').click()">Select file</button>
+    <input type="file" id="upload" name="upload" accept=".pdf" (change)="fileChange($event)" style="display: none;"/>
+</form>
