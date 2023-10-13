@@ -19,7 +19,7 @@ for i in range(len(images)):
     gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
     thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
-    horizontal_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (15,1))
+    horizontal_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (19,1))
     detected_lines = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, horizontal_kernel, iterations=2)
 
     cnts = cv2.findContours(detected_lines, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
