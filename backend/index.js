@@ -1,14 +1,16 @@
 const express = require('express');
 const spawn = require('child_process').spawn;
 const fs = require("fs");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 
 const upload = require('./upload');
 
 app.post('/upload', upload.single('file'), (req, res) => {
     // Handle the uploaded file
-    const ls = spawn('python', ['lines.py', "uploads/" + req.file.filename]);
+    const ls = spawn('python3', ['detectronlayoutparser.py', "uploads/" + req.file.filename]);
     
     ls.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
@@ -22,6 +24,14 @@ app.post('/upload', upload.single('file'), (req, res) => {
         else {
             res.send("Error occured")
         }
+    });
+
+    ls.stdout.on('data', (data) => {
+        console.log(`stdout: ${data}`);
+    });
+      
+    ls.stderr.on('data', (data) => {
+        console.log(`stderr: ${data}`);
     });
     
 });
@@ -46,4 +56,4 @@ app.get("/", (req, res) => {
     )
 })
 
-app.listen(3000)
+app.listen(3000, () => {console.log("listening...")})

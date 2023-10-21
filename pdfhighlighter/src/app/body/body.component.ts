@@ -18,7 +18,7 @@ export class BodyComponent {
     let formData:FormData = new FormData();
     formData.append('file', file)
     
-    this.http.post(`/api/upload`, formData, {responseType: "arraybuffer"})
+    this.http.post(`http://ec2-13-51-158-203.eu-north-1.compute.amazonaws.com:3000/upload`, formData, {responseType: "arraybuffer"})
     .subscribe(data => {
       var blob = new Blob([data], { type: "application/pdf" });
       saveAs(blob, 'result.pdf');
